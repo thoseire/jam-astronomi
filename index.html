@@ -172,6 +172,72 @@ body{
     top:8px;
     transform-origin:center 102px;
 }
+.today-panel{
+    position:absolute;
+    top:320px;
+    left:50%;
+    transform:translateX(-50%);
+
+    width:250px;
+    text-align:center;
+
+    font-size:.9rem;
+    opacity:.8;
+}
+
+.today-panel::before{
+    content:"";
+
+    display:block;
+
+    width:120px;
+    height:1px;
+
+    background:rgba(255,255,255,.15);
+
+    margin:0 auto 10px auto;
+}
+
+.events-panel{
+    position:absolute;
+
+    top:380px;
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:250px;
+
+    text-align:center;
+}
+
+.events-title{
+    font-size:.7rem;
+
+    letter-spacing:2px;
+
+    opacity:.6;
+
+    margin-bottom:15px;
+}
+
+.event-item{
+    margin-bottom:16px;
+}
+
+.event-name{
+    font-weight:600;
+}
+
+.event-date{
+    font-size:.85rem;
+    opacity:.6;
+}
+
+.event-countdown{
+    color:#9dc4ff;
+    font-size:.85rem;
+}
 </style>
 </head>
 <body>
@@ -197,6 +263,19 @@ body{
     <div id="time">00:00:00</div>
     <div id="date">Thursday</div>
 </div>
+<div class="today-panel">
+    <div id="today-date"></div>
+</div>
+
+<div class="events-panel">
+
+    <div class="events-title">
+        UPCOMING SKY EVENTS
+    </div>
+
+    <div id="events-list"></div>
+
+</div>
 
 <script>
 function updateClock(){
@@ -212,10 +291,84 @@ function updateClock(){
 
     document.getElementById('time').textContent = time;
     document.getElementById('date').textContent = day;
+document.getElementById('today-date')
+.textContent =
+now.toLocaleDateString(
+    'en-US',
+    {
+        day:'numeric',
+        month:'long',
+        year:'numeric'
+    }
+);
 }
 
 updateClock();
 setInterval(updateClock,1000);
+const events = [
+
+{
+    icon:"🌕",
+    name:"Full Moon",
+    date:"2026-06-05"
+},
+
+{
+    icon:"🌑",
+    name:"New Moon",
+    date:"2026-06-19"
+},
+
+{
+    icon:"🌠",
+    name:"Perseid Meteor Shower",
+    date:"2026-08-12"
+}
+
+];
+
+function renderEvents(){
+
+    const container =
+    document.getElementById("events-list");
+
+    container.innerHTML = "";
+
+    const now = new Date();
+
+    events.forEach(event=>{
+
+        const target =
+        new Date(event.date);
+
+        const days =
+        Math.ceil(
+            (target-now)/(1000*60*60*24)
+        );
+
+        container.innerHTML += `
+        <div class="event-item">
+
+            <div class="event-name">
+                ${event.icon}
+                ${event.name}
+            </div>
+
+            <div class="event-date">
+                ${target.toLocaleDateString()}
+            </div>
+
+            <div class="event-countdown">
+                in ${days} days
+            </div>
+
+        </div>
+        `;
+    });
+
+}
+
+renderEvents();
 const container = document.querySelector('.clock-container');
 
 for(let i=0;i<12;i++){
