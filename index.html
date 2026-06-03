@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orbit Clock</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0c0d12;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Inter, sans-serif;
+    color:white;
+}
+
+.clock-container{
+    position:relative;
+    width:350px;
+    height:350px;
+}
+
+.orbit{
+    position:absolute;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+.orbit1{
+    width:280px;
+    height:280px;
+    animation:rotate 40s linear infinite;
+}
+
+.orbit2{
+    width:220px;
+    height:220px;
+    animation:rotateReverse 25s linear infinite;
+}
+
+.orbit3{
+    width:160px;
+    height:160px;
+    animation:rotate 15s linear infinite;
+}
+
+.planet{
+    width:14px;
+    height:14px;
+    border-radius:50%;
+    background:white;
+    position:absolute;
+}
+
+.orbit1 .planet{
+    top:-7px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.orbit2 .planet{
+    top:50%;
+    right:-7px;
+    transform:translateY(-50%);
+}
+
+.orbit3 .planet{
+    bottom:-7px;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+.center{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:#14161f;
+    border:1px solid rgba(255,255,255,.15);
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+#time{
+    font-size:1.3rem;
+    font-weight:600;
+}
+
+#date{
+    margin-top:8px;
+    font-size:.75rem;
+    opacity:.75;
+}
+
+@keyframes rotate{
+    from{transform:translate(-50%,-50%) rotate(0deg);}
+    to{transform:translate(-50%,-50%) rotate(360deg);}
+}
+
+@keyframes rotateReverse{
+    from{transform:translate(-50%,-50%) rotate(360deg);}
+    to{transform:translate(-50%,-50%) rotate(0deg);}
+}
+</style>
+</head>
+<body>
+
+<div class="clock-container">
+
+    <div class="orbit orbit1">
+        <div class="planet"></div>
+    </div>
+
+    <div class="orbit orbit2">
+        <div class="planet"></div>
+    </div>
+
+    <div class="orbit orbit3">
+        <div class="planet"></div>
+    </div>
+
+    <div class="center">
+        <div id="time">00:00:00</div>
+        <div id="date">Thursday</div>
+    </div>
+
+</div>
+
+<script>
+function updateClock(){
+    const now = new Date();
+
+    const time = now.toLocaleTimeString('en-US',{
+        hour12:true
+    });
+
+    const day = now.toLocaleDateString('en-US',{
+        weekday:'long'
+    });
+
+    document.getElementById('time').textContent = time;
+    document.getElementById('date').textContent = day;
+}
+
+updateClock();
+setInterval(updateClock,1000);
+</script>
+
+</body>
+</html>
