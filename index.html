@@ -86,8 +86,8 @@ body{
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:120px;
-    height:120px;
+    width:160px;
+    height:160px;
     border-radius:50%;
     background:#14161f;
     border:1px solid rgba(255,255,255,.15);
@@ -96,11 +96,14 @@ body{
     flex-direction:column;
     justify-content:center;
     align-items:center;
+    text-align:center;
+    z-index:20;
 }
 
 #time{
-    font-size:1.3rem;
-    font-weight:600;
+    font-size:1.6rem;
+    font-weight:700;
+    white-space:nowrap;
 }
 
 #date{
@@ -118,29 +121,81 @@ body{
     from{transform:translate(-50%,-50%) rotate(360deg);}
     to{transform:translate(-50%,-50%) rotate(0deg);}
 }
+body{
+    overflow:hidden;
+    background:#050814;
+}
+
+.stars{
+    position:fixed;
+    inset:0;
+    background:
+        radial-gradient(circle at 20% 30%, white 1px, transparent 2px),
+        radial-gradient(circle at 70% 40%, white 1px, transparent 2px),
+        radial-gradient(circle at 40% 80%, white 1px, transparent 2px),
+        radial-gradient(circle at 80% 15%, white 1px, transparent 2px);
+    background-size:250px 250px;
+    opacity:.4;
+}
+
+.sun{
+    width:18px;
+    height:18px;
+    border-radius:50%;
+    background:#ffd54f;
+    box-shadow:
+        0 0 10px #ffd54f,
+        0 0 25px #ffd54f;
+    margin-bottom:10px;
+}
+
+.earth{
+    background:#64b5f6;
+    box-shadow:0 0 8px #64b5f6;
+}
+
+.moon{
+    background:#d9d9d9;
+}
+
+.saturn{
+    background:#ffb74d;
+    box-shadow:0 0 8px #ffb74d;
+}
+
+.tick{
+    position:absolute;
+    width:2px;
+    height:8px;
+    background:rgba(255,255,255,.4);
+    left:50%;
+    top:6px;
+    transform-origin:center 134px;
+}
 </style>
 </head>
 <body>
 
+<div class="stars"></div>
+
 <div class="clock-container">
 
-    <div class="orbit orbit1">
-        <div class="planet"></div>
-    </div>
+  <div class="orbit orbit1">
+    <div class="planet saturn"></div>
+</div>
 
-    <div class="orbit orbit2">
-        <div class="planet"></div>
-    </div>
+<div class="orbit orbit2">
+    <div class="planet earth"></div>
+</div>
 
-    <div class="orbit orbit3">
-        <div class="planet"></div>
-    </div>
+<div class="orbit orbit3">
+    <div class="planet moon"></div>
+</div>
 
     <div class="center">
-        <div id="time">00:00:00</div>
-        <div id="date">Thursday</div>
-    </div>
-
+    <div class="sun"></div>
+    <div id="time">00:00:00</div>
+    <div id="date">Thursday</div>
 </div>
 
 <script>
@@ -161,6 +216,15 @@ function updateClock(){
 
 updateClock();
 setInterval(updateClock,1000);
+const container = document.querySelector('.clock-container');
+
+for(let i=0;i<12;i++){
+    const tick = document.createElement('div');
+    tick.className = 'tick';
+    tick.style.transform =
+        `translateX(-50%) rotate(${i*30}deg)`;
+    container.appendChild(tick);
+}
 </script>
 
 </body>
