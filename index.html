@@ -174,7 +174,7 @@ body{
 }
 .today-panel{
     position:absolute;
-    top:320px;
+    top:250px;
     left:50%;
     transform:translateX(-50%);
 
@@ -201,7 +201,7 @@ body{
 .events-panel{
     position:absolute;
 
-    top:380px;
+    top:300px;
     left:50%;
 
     transform:translateX(-50%);
@@ -270,7 +270,7 @@ body{
 <div class="events-panel">
 
     <div class="events-title">
-        UPCOMING SKY EVENTS
+        UPCOMING CELESTIA
     </div>
 
     <div id="events-list"></div>
@@ -355,7 +355,14 @@ function renderEvents(){
             </div>
 
             <div class="event-date">
-                ${target.toLocaleDateString()}
+                ${target.toLocaleDateString(
+    'en-US',
+    {
+        day:'numeric',
+        month:'long',
+        year:'numeric'
+    }
+)}
             </div>
 
             <div class="event-countdown">
