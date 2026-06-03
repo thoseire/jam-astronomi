@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Clock</title>
+    <style>
+        body {
+            background-color: #0f0f11; /* Warna hitam gelap/moody */
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        .orrery {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 1px dashed rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: spin 20s linear infinite;
+        }
+        .orrery::before {
+            content: '';
+            position: absolute;
+            width: 130px;
+            height: 130px;
+            border: 1px dashed rgba(255,255,255,0.15);
+            border-radius: 50%;
+        }
+        .sun {
+            width: 24px;
+            height: 24px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255,255,255,0.8);
+            z-index: 2;
+        }
+        .planet1 {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #cccccc;
+            border-radius: 50%;
+            top: 30px;
+        }
+        .planet2 {
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            right: -2px;
+            animation: spin-reverse 10s linear infinite;
+        }
+        .clock-text {
+            position: absolute;
+            bottom: 20px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            background: rgba(15, 15, 17, 0.8);
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-align: center;
+            pointer-events: none;
+        }
+        @keyframes spin {
+            100% { transform: rotate(30deg); }
+            0% { transform: rotate(390deg); }
+        }
+        @keyframes spin-reverse {
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orrery">
+        <div class="sun"></div>
+        <div class="planet1">
+            <div class="planet2"></div>
+        </div>
+    </div>
+    
+    <div class="clock-text" id="time">00:00:00</div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            document.getElementById('time').innerText = hours + ':' + minutes + ':' + seconds;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
